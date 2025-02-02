@@ -1,3 +1,1 @@
-export function useFirebase() {
-  console.log('useFirebase');
-}
+export * from './useFirebase';

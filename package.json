@@ -1,0 +1,55 @@
+{
+  "name": "@janossik/usefirebase",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "React hooks for Firebase",
+  "author": "Marcin Czaniecki",
+  "homepage": "https://github.com/marcin-czaniecki/usefirebase",
+  "bugs": {
+    "url": "https://github.com/marcin-czaniecki/usefirebase/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marcin-czaniecki/usefirebase.git"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "lint": "tsc",
+    "build": "tsup",
+    "format": "prettier --write .",
+    "check-format": "prettier --check .",
+    "check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+    "ci": "npm run build && npm run check-format && npm run check-exports && npm run lint",
+    "prepublishOnly": "npm run ci",
+    "local-release": "changeset version && changeset publish"
+  },
+  "keywords": [
+    "firebase",
+    "react",
+    "hooks",
+    "usefirebase",
+    "firestore",
+    "serverless"
+  ],
+  "dependencies": {
+    "firebase": "^11.x.x",
+    "react": "^19.x.x"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.17.3",
+    "@changesets/cli": "^2.27.12",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.x"
+  },
+  "type": "module"
+}

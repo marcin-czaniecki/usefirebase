@@ -1,5 +1,11 @@
 # @janossik/usefirebase
 
+## 0.0.4
+
+### Patch Changes
+
+- 23b8c12: add useFirestore hook and update Firebase context for improved Firestore integration
+
 ## 0.0.3
 
 ### Patch Changes

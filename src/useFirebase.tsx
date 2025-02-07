@@ -2,12 +2,12 @@ import { initializeApp, type FirebaseApp, type FirebaseOptions } from 'firebase/
 import { getAuth, type Auth } from 'firebase/auth';
 import { getFirestore, type Firestore } from 'firebase/firestore';
 import * as React from 'react';
-import { useFirestore } from './useFirestore';
+import { useReadFirestore } from './useFirestore/useReadFirestore';
 
 const FirebaseContext = React.createContext<{
   readonly getApp: () => FirebaseApp;
   readonly getAuth: () => Auth;
-  readonly getFirestore: () => ReturnType<typeof useFirestore>;
+  readonly getFirestore: () => ReturnType<typeof useReadFirestore>;
 }>({
   getApp: () => {
     throw new Error('Firebase not initialized or App not enabled');
@@ -49,7 +49,7 @@ export const FirebaseProvider = ({ children, options, enableAuth, enableFirestor
           if (!firestore) {
             throw new Error('Firestore not enabled');
           }
-          return useFirestore(firestore);
+          return useReadFirestore(firestore);
         },
       }}
     >

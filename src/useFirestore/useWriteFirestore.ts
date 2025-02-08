@@ -11,8 +11,8 @@ export const useWriteFirestore = (
   const setDoc = useMemo(
     () =>
       <AppModelType extends firestore.DocumentData, DbModelType extends firestore.WithFieldValue<AppModelType>>(
-        path: string,
         data: DbModelType,
+        path: string,
         ...pathSegments: string[]
       ) =>
         firestore.setDoc(doc<AppModelType, DbModelType>(path, ...pathSegments), data),
@@ -21,7 +21,7 @@ export const useWriteFirestore = (
 
   const updateDoc = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, data: firestore.UpdateData<DbModelType>, ...pathSegments: string[]) =>
+      <AppModelType, DbModelType extends firestore.DocumentData>(data: firestore.UpdateData<DbModelType>, path: string, ...pathSegments: string[]) =>
         firestore.updateDoc(doc<AppModelType, DbModelType>(path, ...pathSegments), data),
     [doc],
   );

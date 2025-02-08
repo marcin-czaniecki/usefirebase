@@ -6,7 +6,7 @@ export const useMutationFirestore = (db: firestore.Firestore) => {
 
   const batchSet = useMemo(
     () =>
-      <AppModelType extends firestore.DocumentData>(path: string, data: firestore.WithFieldValue<AppModelType>, ...pathSegments: string[]) => {
+      <AppModelType extends firestore.DocumentData>(data: firestore.WithFieldValue<AppModelType>, path: string, ...pathSegments: string[]) => {
         const docRef = firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType>;
         batch.set(docRef, data);
       },
@@ -15,7 +15,7 @@ export const useMutationFirestore = (db: firestore.Firestore) => {
 
   const batchUpdate = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, data: firestore.UpdateData<DbModelType>, ...pathSegments: string[]) => {
+      <AppModelType, DbModelType extends firestore.DocumentData>(data: firestore.UpdateData<DbModelType>, path: string, ...pathSegments: string[]) => {
         const docRef = firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType, DbModelType>;
         batch.update(docRef, data);
       },

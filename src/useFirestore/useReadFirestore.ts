@@ -36,7 +36,7 @@ export const useReadFirestore = (
 
   const query = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, constraints: firestore.QueryConstraint[], ...pathSegments: string[]) =>
+      <AppModelType, DbModelType extends firestore.DocumentData>(constraints: firestore.QueryConstraint[], path: string, ...pathSegments: string[]) =>
         firestore.query<AppModelType, DbModelType>(collection(path, ...pathSegments), ...constraints),
     [collection],
   );

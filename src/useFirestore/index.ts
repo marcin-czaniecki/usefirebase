@@ -8,14 +8,14 @@ import { useMemo } from 'react';
 export function useFirestore(db: Firestore) {
   const doc = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
+      <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
         firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType, DbModelType>,
     [db],
   );
 
   const collection = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
+      <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
         firestore.collection(db, path, ...pathSegments) as firestore.CollectionReference<AppModelType, DbModelType>,
     [db],
   );

@@ -3,7 +3,7 @@ import * as firestore from 'firebase/firestore';
 
 export const useWriteFirestore = (
   db: firestore.Firestore,
-  doc: <AppModelType, DbModelType extends firestore.DocumentData>(
+  doc: <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(
     path: string,
     ...pathSegments: string[]
   ) => firestore.DocumentReference<AppModelType, DbModelType>,
@@ -21,7 +21,11 @@ export const useWriteFirestore = (
 
   const updateDoc = useMemo(
     () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(data: firestore.UpdateData<DbModelType>, path: string, ...pathSegments: string[]) =>
+      <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(
+        data: firestore.UpdateData<DbModelType>,
+        path: string,
+        ...pathSegments: string[]
+      ) =>
         firestore.updateDoc(doc<AppModelType, DbModelType>(path, ...pathSegments), data),
     [doc],
   );

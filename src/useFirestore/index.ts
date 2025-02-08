@@ -1,11 +1,10 @@
 import * as firestore from 'firebase/firestore';
-import type { Firestore } from 'firebase/firestore';
 import { useWriteFirestore } from './useWriteFirestore';
 import { useReadFirestore } from './useReadFirestore';
 import { useMutationFirestore } from './useMutationFirestore ';
 import { useMemo } from 'react';
 
-export function useFirestore(db: Firestore) {
+export function useFirestore(db: firestore.Firestore) {
   const doc = useMemo(
     () =>
       <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(path: string, ...pathSegments: string[]) =>

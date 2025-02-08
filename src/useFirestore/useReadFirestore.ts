@@ -1,26 +1,22 @@
 import * as firestore from 'firebase/firestore';
 import { useMemo } from 'react';
 
-export const useReadFirestore = (db: firestore.Firestore) => {
-  const collection = useMemo(
-    () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
-        firestore.collection(db, path, ...pathSegments) as firestore.CollectionReference<AppModelType, DbModelType>,
-    [db],
-  );
-
+export const useReadFirestore = (
+  db: firestore.Firestore,
+  doc: <AppModelType, DbModelType extends firestore.DocumentData>(
+    path: string,
+    ...pathSegments: string[]
+  ) => firestore.DocumentReference<AppModelType, DbModelType>,
+  collection: <AppModelType, DbModelType extends firestore.DocumentData>(
+    path: string,
+    ...pathSegments: string[]
+  ) => firestore.CollectionReference<AppModelType, DbModelType>,
+) => {
   const getDocs = useMemo(
     () =>
       <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
         firestore.getDocs<AppModelType, DbModelType>(collection(path, ...pathSegments)),
     [collection],
-  );
-
-  const doc = useMemo(
-    () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
-        firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType, DbModelType>,
-    [db],
   );
 
   const getDoc = useMemo(

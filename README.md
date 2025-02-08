@@ -47,7 +47,7 @@ import { useFirebase } from '@janossik/usefirebase';
 
 const MyComponent = () => {
   const { getFirestore, getAuth } = useFirebase();
-  const firestoreUtils /*it is useFirestore hook*/ = getFirestore();
+  const firestoreUtils = getFirestore();
   const authInstance = getAuth();
 
   // ...use the instances for your operations...
@@ -64,7 +64,7 @@ import { useFirebase } from '@janossik/usefirebase';
 
 const FirestoreComponent = () => {
   const { getFirestore } = useFirebase();
-  const { getDocs, getDoc, onSnapshot, query } = getFirestore();
+  const { getDocs, getDoc, onSnapshot, query, setDoc, updateDoc, deleteDoc, batchSet, batchUpdate, batchDelete, commit } = getFirestore();
 
   // Example: Fetching documents from a collection
   useEffect(() => {
@@ -114,11 +114,41 @@ const FirestoreComponent = () => {
     fetchQuery();
   }, [query]);
 
-  return <div>Firestore Operations</div>;
+  // Example: Setting a document
+  const handleSetDoc = async () => {
+    await setDoc('collectionName/docId', { field: 'value' });
+  };
+
+  // Example: Updating a document
+  const handleUpdateDoc = async () => {
+    await updateDoc('collectionName/docId', { field: 'newValue' });
+  };
+
+  // Example: Deleting a document
+  const handleDeleteDoc = async () => {
+    await deleteDoc('collectionName/docId');
+  };
+
+  // Example: Batch operations
+  const handleBatchOperations = async () => {
+    batchSet('collectionName/docId1', { field: 'value1' });
+    batchUpdate('collectionName/docId2', { field: 'value2' });
+    batchDelete('collectionName/docId3');
+    await commit();
+  };
+
+  return (
+    <div>
+      <button onClick={handleSetDoc}>Set Document</button>
+      <button onClick={handleUpdateDoc}>Update Document</button>
+      <button onClick={handleDeleteDoc}>Delete Document</button>
+      <button onClick={handleBatchOperations}>Batch Operations</button>
+    </div>
+  );
 };
 ```
 
-This example demonstrates how to fetch documents, fetch a single document, listen for real-time updates, and query documents using the `useFirestore` hook.
+This example demonstrates how to fetch documents, fetch a single document, listen for real-time updates, query documents, set a document, update a document, delete a document, and perform batch operations using the `useFirestore` hook.
 
 ## Testing and Building
 

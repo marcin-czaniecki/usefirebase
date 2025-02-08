@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
 import * as firestore from 'firebase/firestore';
 
-export const useWriteFirestore = (db: firestore.Firestore) => {
-  const doc = useMemo(
-    () =>
-      <AppModelType, DbModelType extends firestore.DocumentData>(path: string, ...pathSegments: string[]) =>
-        firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType, DbModelType>,
-    [db],
-  );
-
+export const useWriteFirestore = (
+  db: firestore.Firestore,
+  doc: <AppModelType, DbModelType extends firestore.DocumentData>(
+    path: string,
+    ...pathSegments: string[]
+  ) => firestore.DocumentReference<AppModelType, DbModelType>,
+) => {
   const setDoc = useMemo(
     () =>
       <AppModelType extends firestore.DocumentData, DbModelType extends firestore.WithFieldValue<AppModelType>>(

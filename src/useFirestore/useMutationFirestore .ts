@@ -1,14 +1,19 @@
 import { useMemo } from 'react';
 import * as firestore from 'firebase/firestore';
 
-export const useMutationFirestore = (db: firestore.Firestore) => {
+export const useMutationFirestore = (
+  db: firestore.Firestore,
+  doc: <AppModelType, DbModelType extends firestore.DocumentData = firestore.DocumentData>(
+    path: string,
+    ...pathSegments: string[]
+  ) => firestore.DocumentReference<AppModelType, DbModelType>,
+) => {
   const batch = useMemo(() => firestore.writeBatch(db), [db]);
 
   const batchSet = useMemo(
     () =>
-      <AppModelType extends firestore.DocumentData>(data: firestore.WithFieldValue<AppModelType>, path: string, ...pathSegments: string[]) => {
-        const docRef = firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType>;
-        batch.set(docRef, data);
+      <AppModelType>(data: firestore.WithFieldValue<AppModelType>, path: string, ...pathSegments: string[]) => {
+        batch.set(doc<AppModelType>(path, ...pathSegments), data);
       },
     [batch, db],
   );
@@ -16,8 +21,7 @@ export const useMutationFirestore = (db: firestore.Firestore) => {
   const batchUpdate = useMemo(
     () =>
       <AppModelType, DbModelType extends firestore.DocumentData>(data: firestore.UpdateData<DbModelType>, path: string, ...pathSegments: string[]) => {
-        const docRef = firestore.doc(db, path, ...pathSegments) as firestore.DocumentReference<AppModelType, DbModelType>;
-        batch.update(docRef, data);
+        batch.update(doc<AppModelType>(path, ...pathSegments), data);
       },
     [batch, db],
   );
@@ -25,8 +29,7 @@ export const useMutationFirestore = (db: firestore.Firestore) => {
   const batchDelete = useMemo(
     () =>
       (path: string, ...pathSegments: string[]) => {
-        const docRef = firestore.doc(db, path, ...pathSegments);
-        batch.delete(docRef);
+        batch.delete(doc(path, ...pathSegments));
       },
     [batch, db],
   );

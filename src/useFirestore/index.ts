@@ -25,6 +25,6 @@ export function useFirestore(db: Firestore) {
     collection,
     ...useReadFirestore(db, doc, collection),
     ...useWriteFirestore(db, doc),
-    ...useMutationFirestore(db),
+    ...useMutationFirestore(db, doc),
   };
 }
